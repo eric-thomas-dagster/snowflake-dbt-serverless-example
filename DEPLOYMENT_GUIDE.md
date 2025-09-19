@@ -220,7 +220,7 @@ RUN pip install -e .
 
 ```bash
 # Clone the template repository to your local machine
-git clone https://github.com/your-org/snowflake-dbt-serverless-example.git
+git clone https://github.com/eric-thomas-dagster/snowflake-dbt-serverless-example.git
 cd snowflake-dbt-serverless-example
 
 # Install dependencies for local development

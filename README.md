@@ -27,7 +27,7 @@ This project demonstrates enterprise-grade data orchestration with:
 
 ### 1. Clone and Install
 ```bash
-git clone <your-repo>
+git clone https://github.com/eric-thomas-dagster/snowflake-dbt-serverless-example.git
 cd snowflake-dbt-serverless-example
 pip install -e .
 ```
