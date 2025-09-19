@@ -2,14 +2,52 @@
 
 This guide walks you through deploying the Snowflake dbt demo to Dagster Cloud Serverless.
 
-## Quick Start Option
+## Quick Start Options
 
-**🚀 If you're setting up a new Dagster+ trial:**
+**🚀 Choose your deployment method:**
 
-1. During trial setup, select the **"Snowflake dbt Analytics Demo"** template
-2. This will automatically deploy this exact project to your new instance
-3. Skip to [Step 3: Set Environment Variables](#3-set-environment-variables)
-4. To customize: Follow [Customization Workflow](#customization-workflow) below
+### Option A: Fork & Use Dagster+ Onboarding (Recommended)
+**To use the Dagster+ onboarding flow:**
+1. **Fork this repository** to your GitHub account first: 
+   - Go to https://github.com/eric-thomas-dagster/snowflake-dbt-serverless-example
+   - Click "Fork" in the top right
+2. **Start Dagster+ trial** and select "Import a Dagster project"
+3. **Choose GitHub** and authorize Dagster+ to access your repositories
+4. **Select your forked repository**: `your-username/snowflake-dbt-serverless-example`
+5. **Complete setup** - Dagster+ will automatically deploy the project
+6. **Set environment variables** in Dagster+ UI (see [Environment Variables](#3-set-environment-variables))
+7. **Ready to test and customize!** ✅
+
+> 📝 **Why fork first?** Dagster+ onboarding requires you to own the repository - you can't import public repositories you don't control.
+
+### Option B: Skip Onboarding - Direct CLI Upload
+**For immediate testing without Git setup:**
+
+1. **Clone this repository** locally:
+
+   **Command Line:**
+   ```bash
+   git clone https://github.com/eric-thomas-dagster/snowflake-dbt-serverless-example.git
+   cd snowflake-dbt-serverless-example
+   pip install -e .
+   ```
+
+   **VS Code:**
+   - Open VS Code → `Cmd+Shift+P` → "Git: Clone"
+   - Enter: `https://github.com/eric-thomas-dagster/snowflake-dbt-serverless-example.git`
+   - Open project and run `pip install -e .` in terminal
+
+   **Cursor IDE:**
+   - Open Cursor → "Clone Repository"
+   - Enter: `https://github.com/eric-thomas-dagster/snowflake-dbt-serverless-example.git`
+   - Open project and run `pip install -e .` in terminal
+
+2. **Setup Dagster+ CLI authentication** (see [CLI Authentication](#setting-up-cli-authentication) below)
+3. **Deploy with CLI**: `dagster-cloud serverless deploy --location-name snowflake-demo`
+4. **Set Snowflake environment variables** in Dagster+ UI (see [Environment Variables](#3-set-environment-variables))
+5. **Good for quick POV**, but you'll need to fork later for customization
+
+> ⚠️ **Prerequisites**: You need a Dagster+ account, API token, and organization name before deploying. See the detailed steps below.
 
 ## Manual Deployment
 
@@ -37,13 +75,15 @@ Ensure your repository contains all the necessary files:
 
 2. **Add Git Integration**
    - Click "Add code location"
-   - Select "GitHub", "GitLab", or "Bitbucket"
-   - Authorize Dagster Cloud to access your repository
-   - Select the repository containing this code
+   - Select "GitHub" or "GitLab"
+   - Authorize Dagster Cloud to access your repositories
+   - Select your forked repository (or this repository if you have access)
 
 3. **Configure Branch Deployment**
    - Set branch to `main` (or your primary branch)
    - Set location name to `snowflake-dbt-demo`
+
+> 💡 **For Your Own Repository**: If you forked this repo, you'll connect to your fork (e.g., `your-username/snowflake-dbt-serverless-example`). This gives you full control to customize and iterate.
 
 ### 3. Set Environment Variables
 
@@ -214,12 +254,41 @@ RUN pip install -e .
 
 ## Customization Workflow
 
-**If you selected this project during trial setup**, here's how to customize it:
+**After you've forked or deployed this project**, here's how to customize it:
 
 ### 1. Get the Source Code
 
+If you **forked the repository**:
+
+**Command Line:**
 ```bash
-# Clone the template repository to your local machine
+# Clone YOUR fork to your local machine
+git clone https://github.com/YOUR-USERNAME/snowflake-dbt-serverless-example.git
+cd snowflake-dbt-serverless-example
+
+# Install dependencies for local development
+pip install -e ".[dev]"
+```
+
+**VS Code:**
+1. **Open VS Code** → `Cmd+Shift+P` → "Git: Clone"
+2. **Enter your fork URL**: `https://github.com/YOUR-USERNAME/snowflake-dbt-serverless-example.git`
+3. **Open the project** and run in terminal:
+   ```bash
+   pip install -e ".[dev]"
+   ```
+
+**Cursor IDE:**
+1. **Open Cursor** → "Clone Repository"
+2. **Enter your fork URL**: `https://github.com/YOUR-USERNAME/snowflake-dbt-serverless-example.git`
+3. **Open the project** and run in terminal:
+   ```bash
+   pip install -e ".[dev]"
+   ```
+
+If you **used CLI deployment** and want to customize:
+```bash
+# Clone the original repository (you'll need to create your own repo later)
 git clone https://github.com/eric-thomas-dagster/snowflake-dbt-serverless-example.git
 cd snowflake-dbt-serverless-example
 
@@ -240,21 +309,27 @@ dg dev
 # - Add new integrations or data sources
 ```
 
-### 3. Connect Your Own Repository
+### 3. Deploy Your Changes
 
-1. **Create a new repository** in your GitHub/GitLab/Bitbucket
+If you **forked the repository**:
+```bash
+# Push changes to YOUR fork
+git add .
+git commit -m "Customize analytics pipeline for my use case"
+git push origin main
+
+# Dagster+ will automatically deploy your changes via Git integration
+```
+
+If you **used CLI deployment** and want to switch to Git:
+1. **Create a new repository** in your GitHub or GitLab
 2. **Push your customized code** to that repository:
    ```bash
-   git remote set-url origin https://github.com/your-org/your-dagster-project.git
+   git remote add origin https://github.com/your-org/your-dagster-project.git
    git push -u origin main
    ```
-
-### 4. Update Dagster+ to Use Your Repository
-
-1. **Go to Dagster+** → "Deployment" → "Settings"
-2. **Add new code location** pointing to your repository
-3. **Remove the old template location** (optional, for cleanup)
-4. **Set environment variables** in your new deployment
+3. **Update Dagster+** to use your new repository (see [Step 2](#2-connect-repository-to-dagster-cloud))
+4. **Remove the old CLI location** (optional, for cleanup)
 
 ### 5. Continuous Development
 

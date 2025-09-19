@@ -26,11 +26,34 @@ This project demonstrates enterprise-grade data orchestration with:
 - Dagster Cloud account (free tier available)
 
 ### 1. Clone and Install
+
+**Option A: Command Line**
 ```bash
 git clone https://github.com/eric-thomas-dagster/snowflake-dbt-serverless-example.git
 cd snowflake-dbt-serverless-example
 pip install -e .
 ```
+
+**Option B: VS Code**
+1. **Open VS Code** and press `Cmd+Shift+P` (Mac) or `Ctrl+Shift+P` (Windows/Linux)
+2. **Type "Git: Clone"** and select it
+3. **Paste repository URL**: `https://github.com/eric-thomas-dagster/snowflake-dbt-serverless-example.git`
+4. **Choose a folder** and open the cloned project
+5. **Open terminal** in VS Code (`View` → `Terminal`) and run:
+   ```bash
+   pip install -e .
+   ```
+
+**Option C: Cursor IDE**
+1. **Open Cursor** and click "Clone Repository" on the welcome screen
+2. **Paste repository URL**: `https://github.com/eric-thomas-dagster/snowflake-dbt-serverless-example.git`
+3. **Choose a folder** and open the cloned project
+4. **Open terminal** in Cursor (`Terminal` → `New Terminal`) and run:
+   ```bash
+   pip install -e .
+   ```
+
+> 💡 **IDE Benefits**: VS Code and Cursor provide excellent Python support, Git integration, and terminal access for running Dagster commands.
 
 ### 2. Configure Snowflake Connection
 Copy the example environment file and fill in your Snowflake credentials:
@@ -70,6 +93,22 @@ dg dev
 # Navigate to http://localhost:3000
 ```
 
+**IDE-Specific Tips:**
+
+**VS Code Users:**
+- **Install Python extension** for better code navigation and debugging
+- **Use integrated terminal** (`View` → `Terminal`) to run `dg dev`
+- **Split terminal** to keep `dg dev` running while exploring code
+- **Port forwarding** automatically works for http://localhost:3000
+
+**Cursor Users:**
+- **AI assistant** can help explain Dagster concepts as you explore
+- **Use terminal** (`Terminal` → `New Terminal`) to run `dg dev`
+- **AI can help modify** assets, jobs, and schedules as you customize
+- **Excellent for learning** Dagster patterns through code exploration
+
+> 🚀 **Coming Soon**: VS Code extension for even easier Dagster+ deployment directly from your editor!
+
 **🔧 Dependency Management:**
 
 This project uses pinned dependency versions in `pyproject.toml` to ensure compatibility:
@@ -108,24 +147,40 @@ dbt parse --profiles-dir .
 
 Choose your deployment method:
 
-#### Option A: Quick Upload (Fastest for Testing)
+#### Option A: Fork & Use Dagster+ Onboarding (Recommended)
+**For the guided onboarding experience:**
 ```bash
-# 1. Install Dagster CLI if not already installed
+# 1. Fork this repository to your GitHub account:
+#    https://github.com/eric-thomas-dagster/snowflake-dbt-serverless-example
+# 2. Sign up for Dagster+ trial at https://dagster.cloud
+# 3. Select "Import a Dagster project" in onboarding
+# 4. Choose GitHub and select your forked repository
+# 5. Set environment variables in Dagster+ UI (see below)
+# 6. ✅ Ready to test and customize!
+```
+
+> **Why fork?** Dagster+ onboarding requires repository ownership - you can't import public repos you don't control.
+
+#### Option B: Quick Upload (Manual Testing)
+```bash
+# 1. Clone the repository first (see "Clone and Install" section above)
+
+# 2. Install Dagster CLI if not already installed
 pip install dagster-cloud
 
-# 2. Configure authentication (get token from Dagster+ UI)
+# 3. Configure authentication (get token from Dagster+ UI)
 export DAGSTER_CLOUD_API_TOKEN="your_token_here"
 export DAGSTER_CLOUD_ORGANIZATION="your_org_name"
 
-# 3. Set deployment target (or use --deployment flag)
+# 4. Set deployment target (or use --deployment flag)
 export DAGSTER_CLOUD_DEPLOYMENT="prod"  # or your deployment name
 
-# 4. Upload directly to Dagster+ (no Git setup needed)
+# 5. Upload directly to Dagster+ (no Git setup needed)
 dagster-cloud serverless deploy \
   --location-name snowflake-demo \
   --package-name dagster_snowflake_dbt_demo
 
-# 5. Set Snowflake environment variables in Dagster+ UI:
+# 6. Set Snowflake environment variables in Dagster+ UI:
 #    - SNOWFLAKE_ACCOUNT, SNOWFLAKE_USER, SNOWFLAKE_PASSWORD, etc.
 # ✅ Ready to test!
 ```
@@ -135,13 +190,14 @@ dagster-cloud serverless deploy \
 - API token from Dagster+ UI (Settings → Tokens)
 - Deployment name (usually "prod" for main deployment)
 
-#### Option B: Git Integration (Production Setup)
-1. Push code to your Git repository
-2. Connect repository to Dagster+ in the UI
-3. Set environment variables in Dagster+ UI  
-4. Deploy via Git integration 🎉
+#### Option C: Manual Git Integration (Skip Onboarding)
+1. **Fork this repository** to your GitHub account
+2. **Skip the onboarding** and go directly to Dagster+ UI
+3. **Add code location manually** in Deployment → Settings
+4. **Connect to your forked repository**
+5. **Set environment variables** in Dagster+ UI
 
-> 💡 **For Quick POV**: Use **Option A** to test immediately without CI/CD setup. Switch to **Option B** for production workflows with proper version control.
+> 💡 **Recommendation**: Use **Option A** for the best experience - fork first, then use Dagster+ onboarding for guided setup.
 
 > 🚀 **Coming Soon**: VS Code extension for even easier Dagster+ deployment directly from your editor!
 
