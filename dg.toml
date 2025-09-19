@@ -1,0 +1,5 @@
+directory_type = "project"
+
+[project]
+root_module = "dagster_snowflake_dbt_demo"
+defs_module = "dagster_snowflake_dbt_demo.defs"

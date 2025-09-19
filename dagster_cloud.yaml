@@ -1,0 +1,38 @@
+# Dagster Cloud deployment configuration for serverless
+
+locations:
+  - location_name: snowflake-dbt-demo
+    code_source:
+      package_name: dagster_snowflake_dbt_demo
+    build:
+      directory: .
+    working_directory: /opt/dagster/app
+    
+    # Environment variables for Snowflake connection
+    # Note: For security, set sensitive values (passwords) in Dagster Cloud UI
+    # These are just the defaults/structure
+    environment_variables:
+      # Required - Set these in Dagster Cloud environment settings
+      SNOWFLAKE_ACCOUNT:
+        from: env_var
+        name: SNOWFLAKE_ACCOUNT
+      SNOWFLAKE_USER:
+        from: env_var  
+        name: SNOWFLAKE_USER
+      SNOWFLAKE_PASSWORD:
+        from: env_var
+        name: SNOWFLAKE_PASSWORD
+      
+      # Optional - Can override in Dagster Cloud if needed
+      SNOWFLAKE_WAREHOUSE:
+        from: value
+        value: COMPUTE_WH
+      SNOWFLAKE_DATABASE:
+        from: value
+        value: SNOWFLAKE_SAMPLE_DATA
+      SNOWFLAKE_SCHEMA:
+        from: value
+        value: TPCH_SF1
+      SNOWFLAKE_ROLE:
+        from: value
+        value: PUBLIC

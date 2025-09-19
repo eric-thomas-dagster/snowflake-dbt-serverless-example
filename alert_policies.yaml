@@ -1,0 +1,89 @@
+# Dagster+ Alert Policies Configuration
+# 
+# This file demonstrates various alert types for monitoring your data pipeline.
+# To deploy: dagster-cloud deployment alert-policies sync -a alert_policies.yaml
+#
+# IMPORTANT: Update email addresses to your own before deploying!
+
+alert_policies:
+  # Asset Materialization Failures
+  - name: asset-materialization-failure-alert
+    description: Alert when critical assets fail to materialize
+    event_types:
+      - ASSET_MATERIALIZATION_FAILED
+    alert_targets:
+      - asset_group_target:
+          asset_group: analytics
+          location_name: snowflake-demo
+          repo_name: __repository__
+      - asset_key_target:
+          asset_key: ["business_kpis"]
+    notification_service:
+      email:
+        email_addresses:
+          - your-email@company.com  # UPDATE THIS!
+          - data-team@company.com   # UPDATE THIS!
+
+  # Asset Check Failures (Data Quality)
+  - name: asset-check-failure-alert
+    description: Alert when data quality checks fail
+    event_types:
+      - ASSET_CHECK_SEVERITY_ERROR
+    alert_targets:
+      - asset_group_target:
+          asset_group: analytics
+          location_name: snowflake-demo
+          repo_name: __repository__
+    notification_service:
+      email:
+        email_addresses:
+          - data-quality@company.com  # UPDATE THIS!
+
+  # Freshness Policy Failures
+  - name: freshness-policy-failure-alert
+    description: Alert when assets become stale (freshness policy failure)
+    event_types:
+      - ASSET_FRESHNESS_POLICY_FAILED
+    alert_targets:
+      - asset_key_target:
+          asset_key: ["raw_customer_data"]
+      - asset_key_target:
+          asset_key: ["business_kpis"]
+    notification_service:
+      email:
+        email_addresses:
+          - data-ops@company.com  # UPDATE THIS!
+
+  # Schedule/Sensor Failures
+  - name: automation-failure-alert
+    description: Alert when schedules or sensors fail to run
+    event_types:
+      - TICK_FAILURE
+    notification_service:
+      email:
+        email_addresses:
+          - devops@company.com  # UPDATE THIS!
+
+  # Run Failures
+  - name: run-failure-alert
+    description: Alert when job runs fail
+    event_types:
+      - RUN_FAILURE
+    notification_service:
+      email:
+        email_addresses:
+          - data-team@company.com  # UPDATE THIS!
+
+# Optional: Slack configuration example (requires Slack app setup)
+# - name: critical-alerts-slack
+#   description: Send critical alerts to Slack
+#   event_types:
+#     - ASSET_MATERIALIZATION_FAILED
+#     - ASSET_CHECK_SEVERITY_ERROR
+#   alert_targets:
+#     - asset_key_target:
+#         asset_key: ["business_kpis"]
+#   notification_service:
+#     slack:
+#       slack_channel_name: data-alerts
+#       slack_workspace_name: your-workspace

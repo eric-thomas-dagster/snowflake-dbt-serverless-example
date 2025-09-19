@@ -1,0 +1,5 @@
+# Dagster configuration for development and preview features
+
+# Enable asset freshness policies (preview feature)
+freshness:
+  enabled: True

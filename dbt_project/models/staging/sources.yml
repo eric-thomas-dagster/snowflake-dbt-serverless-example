@@ -1,0 +1,68 @@
+version: 2
+
+sources:
+  - name: tpch
+    description: TPC-H sample data from Snowflake
+    schema: "{{ env_var('SNOWFLAKE_SCHEMA', 'TPCH_SF1') }}"
+    tables:
+      - name: customer
+        description: Customer information
+        columns:
+          - name: c_custkey
+            description: Customer unique identifier
+            tests:
+              - unique
+              - not_null
+          - name: c_name
+            description: Customer name
+          - name: c_address
+            description: Customer address
+          - name: c_nationkey
+            description: Nation key foreign key
+          - name: c_phone
+            description: Customer phone number
+          - name: c_acctbal
+            description: Customer account balance
+          - name: c_mktsegment
+            description: Customer market segment
+          
+      - name: orders
+        description: Order information
+        columns:
+          - name: o_orderkey
+            description: Order unique identifier
+            tests:
+              - unique
+              - not_null
+          - name: o_custkey
+            description: Customer key foreign key
+            tests:
+              - not_null
+          - name: o_orderstatus
+            description: Order status
+          - name: o_totalprice
+            description: Total order price
+          - name: o_orderdate
+            description: Order date
+            tests:
+              - not_null
+              
+      - name: lineitem
+        description: Line item information
+        columns:
+          - name: l_orderkey
+            description: Order key foreign key
+            tests:
+              - not_null
+          - name: l_linenumber
+            description: Line number within order
+            tests:
+              - not_null
+          - name: l_quantity
+            description: Quantity ordered
+          - name: l_extendedprice
+            description: Extended price
+          - name: l_discount
+            description: Discount percentage
+          - name: l_tax
+            description: Tax percentage

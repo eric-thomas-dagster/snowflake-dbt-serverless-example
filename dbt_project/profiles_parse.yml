@@ -1,0 +1,15 @@
+snowflake_analytics_demo:
+  outputs:
+    dev:
+      type: snowflake
+      account: demo_account
+      user: demo_user
+      password: demo_password
+      role: PUBLIC
+      database: SNOWFLAKE_SAMPLE_DATA
+      warehouse: COMPUTE_WH
+      schema: TPCH_SF1
+      threads: 4
+      client_session_keep_alive: False
+      query_tag: dbt-dagster-demo
+  target: dev

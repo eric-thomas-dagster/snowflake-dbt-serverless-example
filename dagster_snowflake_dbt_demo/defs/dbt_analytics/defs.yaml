@@ -1,0 +1,8 @@
+type: dagster_dbt.DbtProjectComponent
+
+attributes:
+  project: '{{ project_root }}/dbt_project'
+  select: "fqn:*"
+  translation:
+    group_name: tpch_analytics
+    description: "TPC-H data transformations using dbt model {{ node.name }}"
