@@ -97,22 +97,6 @@ SNOWFLAKE_ROLE=PUBLIC
 
 ## Production Configuration
 
-### Resource Optimization
-
-Adjust compute resources in `dagster_cloud.yaml`:
-
-```yaml
-# For larger workloads
-container_config:
-  resources:
-    requests:
-      cpu: 500m
-      memory: 1Gi
-    limits:
-      cpu: 2000m
-      memory: 4Gi
-```
-
 ### Monitoring Setup
 
 1. **Configure Alerts**

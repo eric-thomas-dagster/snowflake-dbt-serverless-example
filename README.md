@@ -487,16 +487,6 @@ Set up additional integrations:
 
 ## 🛠️ Advanced Configuration
 
-### Resource Scaling
-Adjust compute resources in `dagster_cloud.yaml`:
-```yaml
-container_config:
-  resources:
-    requests:
-      cpu: 500m      # Increase for larger workloads
-      memory: 1Gi    # Adjust memory as needed
-```
-
 ### Custom Environment Variables
 Add organization-specific configuration:
 ```yaml
